@@ -4,6 +4,7 @@ const hbs = require('hbs');
 const env = require('dotenv').config({ path: '../.env' });
 
 const app = express();
+const port = process.env.PORT;
 
 const { geocode, forecast } = require('./utils.js');
 
@@ -57,7 +58,8 @@ app.get('/weather', (req, res) => {
           error
         });
       }
-
+      console.log(`Got latitude: ${latitude}`);
+      console.log(`Got longitude: ${longitude}`);
       forecast(latitude, longitude, (error, forecastData) => {
         if (error) {
           return res.send({
@@ -92,6 +94,6 @@ app.get('*', (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log('Server is up on Port 3000');
+app.listen(port, () => {
+  console.log(`Server is up on Port ${port}`);
 });
